@@ -8,7 +8,7 @@
 int main(void)
 {
 	int states = 22;
-	char pattern[] = {'A','C','B','C','A','C','A','D','A','D','B','C','B','C','A','D','B','C','B','C','B','E'}
+	char pattern[] = {'A','C','B','C','A','C','A','D','A','D','B','C','B','C','A','D','B','C','B','C','B','E'};
 	int flag=0;
 	
 	DDRD = 0b00000000; //all pins set as inputs (includes PD2, attached to switch)
@@ -33,6 +33,7 @@ int main(void)
 		}
 			
 	}
+}	
 		
 	
 void change_state(char new_state, int duration)
@@ -67,6 +68,18 @@ void change_state(char new_state, int duration)
 	
 }
 
+void wait(volatile int multiple)
+{
+	while(multiple > 0)
+	{
+		TCCR0A = 0x00; //clears WGM00 and WGM01 (bits 0 and 1) to ensure timer/counter is in normal mode
+		TCNT0 = 0; //preload value for testing on count = 250
+		TCCR0B = 0b00000011;
+		while(TCNT0 < 0xFA); //exits when count = 250 (req. preload of 0 to make count 250)
+		TCCR0B = 0x00;//stop timeR0
+		multiple--;
+	}
+}
 		
 	
 
