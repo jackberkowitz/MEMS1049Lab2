@@ -5,7 +5,7 @@
 
 #include <avr/io.h>
 
-void change_state(char new_state,int duration);
+void change_state(char);
 void wait(volatile int);
 
 int main(void)
@@ -39,7 +39,7 @@ int main(void)
 }	
 		
 	
-void change_state(char new_state, int duration)
+void change_state(char new_state)
 {
 	switch(new_state)
 	{
