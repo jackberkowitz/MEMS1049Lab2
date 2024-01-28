@@ -5,6 +5,9 @@
 
 #include <avr/io.h>
 
+void change_state(char new_state,int duration);
+void wait(volatile int);
+
 int main(void)
 {
 	int states = 22;
